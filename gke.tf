@@ -28,21 +28,11 @@ resource "google_container_node_pool" "node-pool-1" {
   node_count = var.gke_num_nodes
   node_locations = ["${var.region}-${var.zones.a}"]
   node_config {
-    # oauth_scopes = [
-    #   "https://www.googleapis.com/auth/logging.write",
-    #   "https://www.googleapis.com/auth/monitoring",
-    # ]
-
     labels = {
       env = var.project_id
     }
-
-    # preemptible  = true
-    machine_type = "n1-standard-1"
+    machine_type = "n1-standard-4"
     tags         = ["gke-node", "${var.project_id}-gke"]
-    # metadata = {
-    #   disable-legacy-endpoints = "true"
-    # }
   }
 }
 resource "google_container_node_pool" "node-pool-2" {
@@ -52,21 +42,11 @@ resource "google_container_node_pool" "node-pool-2" {
   node_count = var.gke_num_nodes
   node_locations = ["${var.region}-${var.zones.b}"]
   node_config {
-    # oauth_scopes = [
-    #   "https://www.googleapis.com/auth/logging.write",
-    #   "https://www.googleapis.com/auth/monitoring",
-    # ]
-
     labels = {
       env = var.project_id
     }
-
-    # preemptible  = true
-    machine_type = "n1-standard-1"
+    machine_type = "n1-standard-4"
     tags         = ["gke-node", "${var.project_id}-gke"]
-    # metadata = {
-    #   disable-legacy-endpoints = "true"
-    # }
   }
 }
 resource "google_container_node_pool" "node-pool-3" {
@@ -76,22 +56,11 @@ resource "google_container_node_pool" "node-pool-3" {
   node_count = var.gke_num_nodes
   node_locations = ["${var.region}-${var.zones.c}"]
   node_config {
-    # oauth_scopes = [
-    #   "https://www.googleapis.com/auth/logging.write",
-    #   "https://www.googleapis.com/auth/monitoring",
-    # ]
-
     labels = {
       env = var.project_id
     }
-
-    # preemptible  = true
-    machine_type = "n1-standard-1"
+    machine_type = "n1-standard-4"
     tags         = ["gke-node", "${var.project_id}-gke"]
-    # metadata = {
-    #   disable-legacy-endpoints = "true"
-    # }
   }
 }
-
 

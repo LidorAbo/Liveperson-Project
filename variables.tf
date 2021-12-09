@@ -12,14 +12,6 @@ variable "region" {
   type = string
   description = "region"
 }
-variable "airflow_webui_username" {
-  type = string
-  description = "airflow username for authentication with web ui" 
-}
-variable "airflow_webui_password" {
-  type = string
-  description = "airflow password for authentication with web ui"
-}
 variable "index_node_pool" {
     type = list(number)
     description = "indexes of node pools"
