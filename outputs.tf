@@ -6,14 +6,14 @@ output "url" {
 }
 output "username" {
   depends_on = [
-     data.external.username,
+     data.external.creds
 
   ]
-  value = data.external.username.result.username
+  value = "${data.external.creds.result.username}"
 }
 output "password" {
   depends_on = [
-    data.external.password,
+    data.external.creds
   ]
-  value = data.external.password.result.password
+  value = "${data.external.creds.result.password}"
 }

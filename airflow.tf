@@ -8,24 +8,27 @@ data "kubernetes_service" "webserver" {
     namespace = var.helm_chart_name
   }
 }
-data "external" "username" {
+data "external" "creds" {
   depends_on = [
     helm_release.airflow,
   ]
-   program = ["bash", "-c", <<EOT
-echo "{\"username\": \"$(helm -n ${var.helm_chart_name} status ${var.helm_chart_name} | grep username: | head -n 1 | cut -d ':' -f2 | tr -d ' ')\"}"
-EOT
-]
+    program = ["bash", "${path.module}/scripts/get_cred.sh"]
+    query = {
+      chart = "${var.helm_chart_name}"
+      region = "${var.region}"
+      project_id = "${var.project_id}"
+
+    }
 }
-data "external" "password" {
-  depends_on = [
-    helm_release.airflow
-  ]
-  program = ["bash", "-c", <<EOT
-echo "{\"password\": \"$(helm -n ${var.helm_chart_name} status ${var.helm_chart_name} | grep password: | head -n 1 | cut -d ':' -f2 | tr -d ' ')\"}"
-EOT
-]
-}
+# data "external" "password" {
+#   depends_on = [
+#     helm_release.airflow
+#   ]
+#   program = ["bash", "-c", <<EOT
+# echo "{\"password\": \"$(helm -n ${var.helm_chart_name} status ${var.helm_chart_name} | grep password: | head -n 1 | cut -d ':' -f2 | tr -d ' ')\"}"
+# EOT
+# ]
+# }
 resource "helm_release" "airflow" {
   depends_on = [
     google_container_cluster.primary,
