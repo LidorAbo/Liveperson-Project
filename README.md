@@ -11,7 +11,7 @@ This repo also including `airflow.tf` and `output.tf` for install [airflow helm 
 
 > **_NOTE:_** The `variables.tf`  file used to store used variables by all the `.tf` files except `backend.tf`.
 
-> **_NOTE:_** The `terraform.tfvars` file used to initialize the region and project_id parameters in google provider.
+> **_NOTE:_** The `terraform.tfvars` file used to initialize the `region` and `project_id` parameters in google provider.
 
 > **_NOTE:_** The `provider.tf` used to connect to the created cluster in  [Google Cloud Platform](https://cloud.google.com) for install [airflow helm chart](https://airflow.apache.org/docs/helm-chart/stable/index.html) on it and access airflow-webserver service attributes for getting web ui url.
 
@@ -22,6 +22,7 @@ If you want to follow along and create your own GKE Cluster and access afterthat
 * a configured [Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
 * [kubectl](https://kubernetes.io/docs/reference/kubectl/overview/)
 * [helm cli](https://helm.sh/docs/intro/install/)
+* [jq](https://linuxhint.com/bash_jq_command/)
 
 ## Usage
 
@@ -68,15 +69,9 @@ password = "****"
 url = "http://34.145.125.99:8080"
 username = "****"
 ```
-You can access airflow webui by enter above url in your browser, enter credentials and get the airflow webui interface.
+**Now, you can access airflow webui by enter above url in your browser, enter credentials and get the airflow webui interface.**
 
-Also you can access cluster by configuring kubectl to using kubeconfig of GKE by following command:
-
-```console
-gcloud container clusters get-credentials <your-project-id>  --region  us-west1
-```
-
-and you can access by cluster by following command:
+Also, you can check access to the cluster by following command:
 
 ```console
 kubectl get nodes
