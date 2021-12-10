@@ -1,6 +1,7 @@
 data "kubernetes_service" "webserver" {
   depends_on = [
-    helm_release.airflow
+    helm_release.airflow,
+    
   ]
   metadata {
     name = "${var.helm_chart_name}-webserver"
@@ -9,15 +10,21 @@ data "kubernetes_service" "webserver" {
 }
 data "external" "username" {
   depends_on = [
-    helm_release.airflow
+    helm_release.airflow,
   ]
-  program = ["/bin/bash", "-c", "echo \"{\\\"username\\\":\\\"$(helm -n ${var.helm_chart_name} status ${var.helm_chart_name} | grep username':' | head -n 1 | cut -d ':' -f 2 | tr -d ' ')\\\"}\""]
+   program = ["bash", "-c", <<EOT
+echo "{\"username\": \"$(helm -n ${var.helm_chart_name} status ${var.helm_chart_name} | grep username: | head -n 1 | cut -d ':' -f2 | tr -d ' ')\"}"
+EOT
+]
 }
 data "external" "password" {
   depends_on = [
     helm_release.airflow
   ]
-  program = ["/bin/bash", "-c", "echo \"{\\\"password\\\":\\\"$(helm -n ${var.helm_chart_name} status ${var.helm_chart_name} | grep password':' | head -n 1 | cut -d ':' -f 2 | tr -d ' ')\\\"}\""]
+  program = ["bash", "-c", <<EOT
+echo "{\"password\": \"$(helm -n ${var.helm_chart_name} status ${var.helm_chart_name} | grep password: | head -n 1 | cut -d ':' -f2 | tr -d ' ')\"}"
+EOT
+]
 }
 resource "helm_release" "airflow" {
   depends_on = [
